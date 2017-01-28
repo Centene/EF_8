@@ -25,8 +25,9 @@ namespace EF_8.Controllers
             CabFrasGlobal PACI_FRA = new CabFrasGlobal();
             PACI_FRA.PacientesGlob = paciente.GetALLPacientes().ToList();
             Pacientes pacien = new Pacientes();
-            var pu = db.spGetUltimaFraCD();
-            var pe = db.View_CE.Max(p=>p.Nº_FACTURA);
+            
+            string pe = db.View_CE.Max(p=>p.Nº_FACTURA);
+
             return View(PACI_FRA);
         }
         [HttpPost]

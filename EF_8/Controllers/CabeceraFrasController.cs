@@ -21,13 +21,13 @@ namespace EF_8.Controllers
             IVANNEntities db = new IVANNEntities();
             SERIE = Serie;
             ViewBag.Serie = Serie;
+            FECHAFRA = fechafra;
             Pacientes paciente = new Pacientes();
             CabFrasGlobal PACI_FRA = new CabFrasGlobal();
             PACI_FRA.PacientesGlob = paciente.GetALLPacientes().ToList();
             Pacientes pacien = new Pacientes();
             
-            string pe = db.View_CE.Max(p=>p.Nº_FACTURA);
-
+            
             return View(PACI_FRA);
         }
         [HttpPost]
@@ -47,9 +47,12 @@ namespace EF_8.Controllers
             nuevafra.TOTAL = model.TOTAL;
             nuevafra.NOMBRE_Y_APELLIDOS = pacien.NOMBRE_Y_APELLIDOS;
             nuevafra.DNI = pacien.DNI;
-            nuevafra.Nº_FACTURA = "";
+            
             //PACI_FRA.factura.IDPACIENTE = Convert.ToInt32(model.IDPACIENTE);
-
+            string pe = db.View_CE.Max(p => p.Nº_FACTURA);
+            string fradef = nuevafra.Calcula_Ultima_Fra(pe);
+            nuevafra.Nº_FACTURA = fradef;
+            CabeceraFras.CreaNuevaFra(nuevafra);
 
             return View(PACI_FRA);
 

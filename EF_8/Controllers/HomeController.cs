@@ -36,8 +36,16 @@ namespace EF_8.Controllers
             PACI_FRA.PacientesGlob = paciente.GetALLPacientes().ToList();
             Pacientes pacien = new Pacientes();
             return View(PACI_FRA);
-
         }
+        public ActionResult EdicionFras()
+        {
+            IVANNEntities db = new IVANNEntities();
+            CabFrasGlobal PACI_FRA = new CabFrasGlobal();
+            PACI_FRA.PacientesGlob = paciente.GetALLPacientes().ToList();
+
+            return View(PACI_FRA);
+        }
+            
         [HttpPost]
         public ActionResult Facturacion(string Serie, DateTime fecha)
         {
@@ -51,5 +59,20 @@ namespace EF_8.Controllers
 
             return RedirectToAction("Index", "CabeceraFras", new { Serie, fechafra = fechita });
         }
+        [HttpPost]
+        public ActionResult EdicionFras(Pacientes info)
+        {
+            CabFrasGlobal PACI_FRA = new CabFrasGlobal();
+            CabeceraFras fra = new CabeceraFras();
+            Pacientes paci = new Pacientes();
+            var id = info.IDPACIENTE;
+            int idpaciente = Convert.ToInt32(id);
+            PACI_FRA.PacientesGlob = paci.GetALLPacientes().ToList();
+            PACI_FRA.FacturasGlob = fra.GetFrasByIDPACIENTE(idpaciente);
+            return View(PACI_FRA);
+            
+
+        }
+
     }
 }

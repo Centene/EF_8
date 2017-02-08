@@ -20,6 +20,8 @@ namespace EF_8.Models
         public int IDPACIENTE { get; set; }
         public string NOMBRE_Y_APELLIDOS { get; set; }
         public string DNI { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
         public Nullable<System.DateTime> FECHA { get; set; }
         public string Nº_FACTURA { get; set; }
         public Nullable<decimal> TOTAL { get; set; }
@@ -58,6 +60,26 @@ namespace EF_8.Models
             {
                 
             }
+        }
+        public List<CabeceraFras> GetFrasByIDPACIENTE(int idpaciente)
+        {
+            CabeceraFras factura = new CabeceraFras();
+            List<CabeceraFras> facturas = new List<CabeceraFras>();
+            IVANNEntities db = new IVANNEntities();
+            var res = db.spGetFrasIDPaciente(idpaciente);
+            foreach (var item in res)
+            {
+                factura.IDLINEAFRA = item.IDLINEAFRA;
+                factura.IDPACIENTE = item.IDPACIENTE;
+                factura.DNI = item.DNI;
+                factura.FECHA = item.FECHA;
+                factura.Nº_FACTURA = item.Nº_FACTURA;
+                factura.NOMBRE_Y_APELLIDOS = item.NOMBRE_Y_APELLIDOS;
+                factura.TOTAL = item.TOTAL;
+                facturas.Add(factura);
+                factura = new CabeceraFras();
+            }
+            return facturas;
         }
     }
 }

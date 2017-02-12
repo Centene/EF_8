@@ -13,6 +13,6 @@ namespace EF_8.Models
         public CabeceraFras factura = new CabeceraFras();
         public Nullable<decimal> TOTAL { get; set; }
         public int IDPACIENTE { get; set; }
-        int numero;
+        
     }
 }
